@@ -1,6 +1,6 @@
 {
   "task_info":{
-    "label_type": "multi_label",
+    "label_type": "single_label",
     "hierarchical": true,
     "hierar_taxonomy": "data1/taxonomy.txt",
     "hierar_penalty": 0.000001
@@ -49,7 +49,7 @@
   "train": {
     "batch_size": 64,
     "start_epoch": 1,
-    "num_epochs": 5,
+    "num_epochs": 30,
     "num_epochs_static_embedding": 0,
     "decay_steps": 1000,
     "decay_rate": 1.0,
