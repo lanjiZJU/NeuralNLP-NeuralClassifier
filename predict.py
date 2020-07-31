@@ -99,6 +99,20 @@ if __name__ == "__main__":
         predict_prob = predictor.predict(batch_texts)
         for j in predict_prob:
             predict_probs.append(j)
+    
+    with codecs.open("predict_pro.txt", "w", predictor.dataset.CHARSET) as of:
+        for predict_prob in predict_probs:
+            if not is_multi:
+                predict_label_ids = [predict_prob.argmax()]
+            else:
+                predict_label_ids = []
+                predict_label_idx = np.argsort(-predict_prob)
+                for j in range(0, config.eval.top_k):
+                    if predict_prob[predict_label_idx[j]] > config.eval.threshold:
+                        predict_label_ids.append(predict_label_idx[j])
+            predict_label_name = [predictor.dataset.id_to_label_map[predict_label_id] \
+                    for predict_label_id in predict_label_ids]
+            of.write(";".join(predict_prob) + "\n")
     with codecs.open("predict.txt", "w", predictor.dataset.CHARSET) as of:
         for predict_prob in predict_probs:
             if not is_multi:
